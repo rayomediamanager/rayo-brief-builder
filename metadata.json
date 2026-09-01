@@ -1,0 +1,8 @@
+{
+  "name": "RayoBriefing",
+  "description": "RAYO Event Media Brief Builder - A practical planning tool that helps event organisers prepare a clear briefing for their photographer and videographer before an event.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

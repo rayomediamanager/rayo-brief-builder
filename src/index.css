@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "DM Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "DM Sans", "Inter", sans-serif;
+  --font-montserrat: "Montserrat", "DM Sans", sans-serif;
+  
+  --color-rayo-charcoal: #18181b;
+  --color-rayo-dark: #121214;
+  --color-rayo-yellow: #f2c300;
+  --color-rayo-yellow-hover: #dcb000;
+  --color-rayo-gold-dark: #926004;
+}
+
+@layer base {
+  body {
+    @apply font-sans antialiased min-h-screen transition-colors duration-200;
+  }
+
+  /* Default dark styling */
+  html.dark body {
+    background-color: #141416;
+    color: #f4f4f5;
+  }
+
+  /* Light mode styling */
+  html:not(.dark) body,
+  html.light body {
+    background-color: #f8f8f9;
+    color: #18181b;
+  }
+
+  /* Form Elements Base */
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  input[type="number"],
+  input[type="url"],
+  select,
+  textarea {
+    @apply rounded-xl px-4 py-3 text-sm transition-all duration-200 focus:outline-none focus:border-[#f2c300] focus:ring-2 focus:ring-[#f2c300]/30;
+  }
+
+  html.dark input[type="text"],
+  html.dark input[type="date"],
+  html.dark input[type="time"],
+  html.dark input[type="number"],
+  html.dark input[type="url"],
+  html.dark select,
+  html.dark textarea {
+    @apply bg-[#1f1f23] border border-white/10 text-white placeholder-zinc-500;
+  }
+
+  html:not(.dark) input[type="text"],
+  html:not(.dark) input[type="date"],
+  html:not(.dark) input[type="time"],
+  html:not(.dark) input[type="number"],
+  html:not(.dark) input[type="url"],
+  html:not(.dark) select,
+  html:not(.dark) textarea {
+    @apply bg-white border border-zinc-300 text-zinc-900 placeholder-zinc-400 shadow-xs;
+  }
+
+  /* Calendar & time picker icon styling */
+  html.dark input[type="date"]::-webkit-calendar-picker-indicator,
+  html.dark input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8) sepia(1) saturate(5) hue-rotate(5deg);
+    cursor: pointer;
+  }
+
+  html:not(.dark) input[type="date"]::-webkit-calendar-picker-indicator,
+  html:not(.dark) input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: opacity(0.65);
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .rayo-card {
+    @apply rounded-2xl transition-colors duration-200;
+  }
+
+  html.dark .rayo-card {
+    @apply bg-[#18181c] border border-white/[0.08] shadow-2xl;
+  }
+
+  html:not(.dark) .rayo-card {
+    @apply bg-white border border-zinc-200/80 shadow-[0_10px_30px_rgba(0,0,0,0.04)];
+  }
+
+  .ambient-glow {
+    @apply absolute inset-0 -z-10 overflow-hidden pointer-events-none transition-opacity duration-300;
+  }
+
+  html.dark .ambient-glow {
+    background: radial-gradient(circle at 50% 0%, rgba(242, 195, 0, 0.04) 0%, transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(242, 195, 0, 0.02) 0%, transparent 50%);
+  }
+
+  html:not(.dark) .ambient-glow {
+    background: radial-gradient(circle at 50% 0%, rgba(242, 195, 0, 0.06) 0%, transparent 65%),
+                radial-gradient(circle at 100% 100%, rgba(242, 195, 0, 0.03) 0%, transparent 55%);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  html.dark .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(242, 195, 0, 0.25);
+    border-radius: 9999px;
+  }
+  html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(242, 195, 0, 0.5);
+  }
+
+  html:not(.dark) .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.03);
+  }
+  html:not(.dark) .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(146, 96, 4, 0.25);
+    border-radius: 9999px;
+  }
+  html:not(.dark) .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(146, 96, 4, 0.5);
+  }
+}
+
+/* Print Optimization */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #18181b !important;
+  }
+
+  header,
+  footer,
+  nav,
+  #nav-back-button,
+  #nav-next-button,
+  #nav-send-button,
+  #export-toolbar,
+  #print-hide {
+    display: none !important;
+  }
+
+  .rayo-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  #printable-brief {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #18181b !important;
+  }
+
+  .page-break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
