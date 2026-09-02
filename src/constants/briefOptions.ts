@@ -95,9 +95,9 @@ export const PHOTO_REQUIREMENTS_OPTIONS = [
 ];
 
 export const DRESS_CODE_OPTIONS = [
-  'Formal / black tie',
-  'Corporate / business',
   'Smart casual',
+  'Corporate / business',
+  'Formal / black tie',
   'Specific dress code',
   'No particular requirement',
   'Other',
