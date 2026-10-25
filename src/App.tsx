@@ -22,6 +22,7 @@ import { Step6Logistics } from './components/Step6Logistics';
 import { Step7Review } from './components/Step7Review';
 import { ResetModal } from './components/ResetModal';
 import { SendToRayoModal } from './components/SendToRayoModal';
+import { BriefWizard } from './components/BriefWizard';
 
 const LOCAL_STORAGE_KEY = 'rayo_event_brief_builder_data_v1';
 
@@ -60,6 +61,62 @@ export function App() {
     if (!completedSteps.includes(currentStep)) {
       setCompletedSteps((prev) => [...prev, currentStep]);
     }
+  };
+
+  // Brief Wizard AI population helper
+  const handleWizardPopulate = (
+    updates: Partial<EventBriefData>,
+    _count: number,
+  ) => {
+    setBriefData((prev) => ({ ...prev, ...updates }));
+
+    const updatedCompleted = new Set(completedSteps);
+    updatedCompleted.add(1);
+
+    if (
+      updates.eventName ||
+      updates.venue ||
+      updates.eventDate ||
+      updates.eventType
+    ) {
+      updatedCompleted.add(1);
+    }
+    if (
+      (updates.coveragePriorities && updates.coveragePriorities.length > 0) ||
+      updates.mustNotMissMoments
+    ) {
+      updatedCompleted.add(2);
+    }
+    if (
+      updates.keyPeople ||
+      updates.speakerPriority ||
+      updates.hasGroupPhotos
+    ) {
+      updatedCompleted.add(3);
+    }
+    if (
+      (updates.videoStyles && updates.videoStyles.length > 0) ||
+      updates.fullSessionsRecording ||
+      updates.guestInterviews
+    ) {
+      updatedCompleted.add(4);
+    }
+    if (
+      updates.photoStyle ||
+      (updates.photoRequirements && updates.photoRequirements.length > 0)
+    ) {
+      updatedCompleted.add(5);
+    }
+    if (
+      updates.dressCode ||
+      updates.venueLogistics ||
+      updates.referenceUrl ||
+      updates.additionalMediaNotes
+    ) {
+      updatedCompleted.add(6);
+    }
+
+    setCompletedSteps(Array.from(updatedCompleted));
   };
 
   // Step navigation
@@ -129,6 +186,9 @@ export function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        {/* Brief Wizard (AI extraction from raw text) */}
+        <BriefWizard onPopulate={handleWizardPopulate} goToStep={goToStep} />
+
         <div className="rayo-card p-6 sm:p-10 border border-zinc-200/90 dark:border-white/[0.08] bg-white dark:bg-[#18181c]/95 shadow-xl dark:shadow-2xl relative transition-colors duration-200">
           <AnimatePresence mode="wait">
             <motion.div
