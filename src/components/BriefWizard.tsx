@@ -175,7 +175,7 @@ export const BriefWizard: React.FC<BriefWizardProps> = ({
               </span>
             </div>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-0.5">
-              Paste raw event notes, an email, or a run sheet to automatically populate the brief fields.
+              Paste raw event notes or a run sheet to automatically populate the brief fields.
             </p>
           </div>
         </div>

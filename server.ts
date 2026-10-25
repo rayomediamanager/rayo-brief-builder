@@ -54,7 +54,7 @@ app.post('/api/generate-brief', async (req: Request, res: Response) => {
           parts: [
             {
               text: `You are an event media brief extraction specialist for RAYO Media, Melbourne.
-Analyze the following raw event text (which may be an email, run sheet, event description, or rough notes) and extract only the relevant, factual information to populate the brief.
+Analyze the following raw event text (which may be a run sheet, event description, or rough notes) and extract only the relevant, factual information to populate the brief.
 
 STRICT ACCURACY RULES:
 1. ONLY populate fields that are explicitly supported by the supplied text.
