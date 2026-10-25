@@ -161,35 +161,36 @@ export function App() {
                   data={briefData}
                   onEditStep={goToStep}
                   onSendToRayo={() => setIsSendModalOpen(true)}
+                  onPrev={handlePrev}
                 />
               )}
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation Controls Bar */}
-          <div className="mt-10 pt-6 border-t border-zinc-200 dark:border-white/[0.08] flex items-center justify-between flex-wrap gap-4">
-            {/* Back Button */}
-            <div>
-              {currentStep > 1 ? (
-                <button
-                  type="button"
-                  id="nav-back-button"
-                  onClick={handlePrev}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-white/[0.04] hover:bg-zinc-200 dark:hover:bg-white/[0.08] border border-zinc-200 dark:border-white/10 transition-all duration-200"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                  <span>Back</span>
-                </button>
-              ) : (
-                <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">
-                  Step 1 of 7 · Event Basics
-                </div>
-              )}
-            </div>
+          {/* Navigation Controls Bar (Steps 1 to 6) */}
+          {currentStep < STEPS.length && (
+            <div className="mt-10 pt-6 border-t border-zinc-200 dark:border-white/[0.08] flex items-center justify-between flex-wrap gap-4">
+              {/* Back Button */}
+              <div>
+                {currentStep > 1 ? (
+                  <button
+                    type="button"
+                    id="nav-back-button"
+                    onClick={handlePrev}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-white/[0.04] hover:bg-zinc-200 dark:hover:bg-white/[0.08] border border-zinc-200 dark:border-white/10 transition-all duration-200"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span>Back</span>
+                  </button>
+                ) : (
+                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">
+                    Step 1 of 7 · Event Basics
+                  </div>
+                )}
+              </div>
 
-            {/* Next / Finish Button */}
-            <div className="flex items-center gap-3">
-              {currentStep < STEPS.length ? (
+              {/* Next Button */}
+              <div className="flex items-center gap-3">
                 <button
                   type="button"
                   id="nav-next-button"
@@ -199,19 +200,9 @@ export function App() {
                   <span>Continue to {STEPS[currentStep].shortTitle}</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  id="nav-send-button"
-                  onClick={() => setIsSendModalOpen(true)}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold text-[#18181b] bg-[#f2c300] hover:bg-[#dcb000] transition-all duration-200 shadow-lg shadow-[#f2c300]/25"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>Send Brief to RAYO</span>
-                </button>
-              )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </main>
 

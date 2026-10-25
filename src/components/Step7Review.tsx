@@ -19,6 +19,7 @@ import {
   AlertCircle,
   Sparkles,
   Check,
+  ChevronLeft,
 } from 'lucide-react';
 import { EventBriefData } from '../types';
 import { toPng } from 'html-to-image';
@@ -28,12 +29,14 @@ interface Step7ReviewProps {
   data: EventBriefData;
   onEditStep: (stepNumber: number) => void;
   onSendToRayo: () => void;
+  onPrev?: () => void;
 }
 
 export const Step7Review: React.FC<Step7ReviewProps> = ({
   data,
   onEditStep,
   onSendToRayo,
+  onPrev,
 }) => {
   const [copied, setCopied] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -579,6 +582,67 @@ Contact: hello@rayomedia.com.au | Melbourne, VIC
           <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed italic">
             “A good brief gives your media team the information they need to prepare, while leaving them room to use their experience and creativity on the day.”
           </p>
+        </div>
+      </div>
+
+      {/* Review & Export Footer Controls Bar */}
+      <div className="mt-8 pt-6 border-t border-zinc-200 dark:border-white/[0.08] flex items-center justify-between flex-wrap gap-4 print:hidden">
+        {onPrev ? (
+          <button
+            type="button"
+            id="nav-back-button"
+            onClick={onPrev}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-white/[0.04] hover:bg-zinc-200 dark:hover:bg-white/[0.08] border border-zinc-200 dark:border-white/10 transition-all duration-200"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            <span>Back</span>
+          </button>
+        ) : (
+          <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">
+            Step 7 of 7 · Review & Export
+          </div>
+        )}
+
+        <div className="flex flex-wrap items-center gap-2.5 ml-auto">
+          <button
+            type="button"
+            id="copy-brief-button-footer"
+            onClick={handleCopy}
+            className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-800 border border-zinc-300 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] dark:text-white dark:border-white/10 transition-all duration-200 shadow-sm"
+          >
+            {copied ? (
+              <>
+                <Check className="w-4 h-4 text-emerald-600 dark:text-green-400" />
+                <span className="text-emerald-700 dark:text-green-400 font-bold">Brief Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-4 h-4 text-[#926004] dark:text-[#f2c300]" />
+                <span>Copy Brief</span>
+              </>
+            )}
+          </button>
+
+          <button
+            type="button"
+            id="download-brief-button-footer"
+            onClick={handleDownload}
+            disabled={isDownloading}
+            className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-800 border border-zinc-300 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] dark:text-white dark:border-white/10 transition-all duration-200 shadow-sm disabled:opacity-50"
+          >
+            <Download className="w-4 h-4 text-[#926004] dark:text-[#f2c300]" />
+            <span>{isDownloading ? 'Generating...' : 'Download Brief'}</span>
+          </button>
+
+          <button
+            type="button"
+            id="send-to-rayo-button-footer"
+            onClick={onSendToRayo}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-[#18181b] bg-[#f2c300] hover:bg-[#dcb000] transition-all duration-200 shadow-lg shadow-[#f2c300]/25"
+          >
+            <Send className="w-4 h-4" />
+            <span>Send Brief to RAYO</span>
+          </button>
         </div>
       </div>
     </div>
